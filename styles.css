@@ -644,68 +644,126 @@ html.is-navigating .site-header { opacity: .86; }
 }
 
 /* =========================================================
-   TMH HANDSHAKE INTRO + CINEMATIC SCENE TRANSITIONS
+   TMH HANDSHAKE INTRO — REFINED, TRUE HANDSHAKE MOTION
    ========================================================= */
 .site-loader {
   background: #050505;
   overflow: hidden;
 }
 .site-loader::before {
-  content: ""; position: absolute; inset: 0; pointer-events: none;
-  background: radial-gradient(circle at 50% 50%, rgba(255,255,255,.085), transparent 28%),
-              radial-gradient(circle at 50% 50%, rgba(255,255,255,.035), transparent 58%);
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 50% 46%, rgba(255,255,255,.065), transparent 22%),
+    radial-gradient(circle at 50% 46%, rgba(255,255,255,.022), transparent 52%);
 }
 .loader-stage {
-  position: relative; width: min(560px, 72vw);
-  aspect-ratio: 760 / 420; display: grid; place-items: center;
-  perspective: 1000px;
+  position: relative;
+  width: min(440px, 58vw);
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
 }
-.handshake-art { width: 100%; height: auto; overflow: visible; }
-.hand-fill { fill: rgba(245,245,247,.035); stroke: none; }
-.hand-line, .cuff-line, .finger-line, .contact-line {
-  fill: none; stroke: url(#handGlow); stroke-width: 7; stroke-linecap: round; stroke-linejoin: round;
+.handshake-art {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+  filter: drop-shadow(0 0 20px rgba(255,255,255,.055));
+}
+.hand-drawing {
+  fill: none;
+  stroke: url(#handStroke);
+  stroke-width: 1.65;
+  stroke-linecap: round;
+  stroke-linejoin: round;
   vector-effect: non-scaling-stroke;
 }
-.hand-line, .cuff-line, .finger-line {
-  stroke-dasharray: 1250; stroke-dashoffset: 1250;
-  animation: drawHandshake 1.45s cubic-bezier(.22,1,.36,1) .12s forwards;
+.hand-half {
+  opacity: 0;
 }
-.handshake-left { transform-origin: 380px 210px; animation: handEnterLeft 1.25s cubic-bezier(.22,1,.36,1) .05s forwards; }
-.handshake-right { transform-origin: 380px 210px; animation: handEnterRight 1.25s cubic-bezier(.22,1,.36,1) .05s forwards; }
-.contact-line {
-  stroke: rgba(245,245,247,.9); stroke-width: 5; opacity: 0;
-  stroke-dasharray: 160; stroke-dashoffset: 160;
-  animation: contactDraw .75s cubic-bezier(.22,1,.36,1) 1.18s forwards;
+.hand-half-left {
+  transform: translateX(-6.2px);
+  animation: handLeftMeet 1.28s cubic-bezier(.16,1,.3,1) .18s forwards;
 }
-.contact-dot { fill: #f5f5f7; opacity: 0; animation: contactDot .6s ease 1.25s forwards; }
-.loader-ring {
-  position: absolute; width: 78px; height: 78px; border: 1px solid rgba(245,245,247,.38);
-  border-radius: 50%; opacity: 0; transform: scale(.25);
-  animation: connectionRing 1.15s cubic-bezier(.22,1,.36,1) 1.2s forwards;
+.hand-half-right {
+  transform: translateX(6.2px);
+  animation: handRightMeet 1.28s cubic-bezier(.16,1,.3,1) .18s forwards;
+}
+.contact-glow {
+  fill: rgba(255,255,255,.55);
+  opacity: 0;
+  filter: url(#contactGlow);
+  animation: contactGlow .5s ease 1.48s forwards;
+}
+.contact-ring {
+  fill: none;
+  stroke: rgba(255,255,255,.48);
+  stroke-width: .12;
+  opacity: 0;
+  animation: contactRing .9s cubic-bezier(.16,1,.3,1) 1.46s forwards;
+}
+.contact-spark {
+  fill: none;
+  stroke: rgba(255,255,255,.75);
+  stroke-width: .12;
+  stroke-linecap: round;
+  opacity: 0;
+  animation: contactSpark .42s ease 1.48s forwards;
 }
 .loader-wordmark {
-  position: absolute; left: 50%; bottom: 7%; transform: translateX(-50%) translateY(10px);
-  margin: 0; white-space: nowrap; color: rgba(255,255,255,.62);
-  font-size: 10px; font-weight: 650; letter-spacing: .24em; opacity: 0;
-  animation: loaderWordmark 850ms cubic-bezier(.22,1,.36,1) 1.3s forwards;
+  position: absolute;
+  left: 50%;
+  bottom: 8%;
+  transform: translateX(-50%) translateY(8px);
+  margin: 0;
+  white-space: nowrap;
+  color: rgba(255,255,255,.58);
+  font-size: 10px;
+  font-weight: 650;
+  letter-spacing: .24em;
+  opacity: 0;
+  animation: loaderWordmark .7s cubic-bezier(.16,1,.3,1) 1.5s forwards;
 }
-.loader-wordmark span { color: rgba(255,255,255,.25); margin: 0 .4em; }
-body.loaded .site-loader { transform: scale(1.025); }
-@keyframes handEnterLeft {
-  0% { opacity: 0; transform: translateX(-150px) rotate(-5deg) scale(.96); }
-  45% { opacity: 1; }
-  100% { opacity: 1; transform: translateX(0) rotate(0) scale(1); }
+.loader-wordmark span { color: rgba(255,255,255,.2); margin: 0 .4em; }
+body.loaded .site-loader {
+  opacity: 0;
+  transform: scale(1.045);
+  transition: opacity .72s ease, transform .95s cubic-bezier(.16,1,.3,1), visibility .72s;
 }
-@keyframes handEnterRight {
-  0% { opacity: 0; transform: translateX(150px) rotate(5deg) scale(.96); }
-  45% { opacity: 1; }
-  100% { opacity: 1; transform: translateX(0) rotate(0) scale(1); }
+@keyframes handLeftMeet {
+  0% { opacity: 0; transform: translateX(-6.2px) rotate(-2deg); }
+  20% { opacity: 1; }
+  78% { transform: translateX(.28px) rotate(.25deg); }
+  90% { transform: translateX(-.1px) rotate(-.08deg); }
+  100% { opacity: 1; transform: translateX(0) rotate(0); }
 }
-@keyframes drawHandshake { to { stroke-dashoffset: 0; } }
-@keyframes contactDraw { to { opacity: 1; stroke-dashoffset: 0; } }
-@keyframes contactDot { 0% { opacity: 0; transform: scale(.4); } 60% { opacity: 1; transform: scale(1.35); } 100% { opacity: 0; transform: scale(1); } }
-@keyframes connectionRing { 0% { opacity: 0; transform: scale(.25); } 25% { opacity: .75; } 100% { opacity: 0; transform: scale(4.5); } }
-@keyframes loaderWordmark { to { opacity: 1; transform: translateX(-50%) translateY(0); } }
+@keyframes handRightMeet {
+  0% { opacity: 0; transform: translateX(6.2px) rotate(2deg); }
+  20% { opacity: 1; }
+  78% { transform: translateX(-.28px) rotate(-.25deg); }
+  90% { transform: translateX(.1px) rotate(.08deg); }
+  100% { opacity: 1; transform: translateX(0) rotate(0); }
+}
+@keyframes contactGlow {
+  0% { opacity: 0; transform: scale(.35); }
+  40% { opacity: .7; transform: scale(1.15); }
+  100% { opacity: 0; transform: scale(1); }
+}
+@keyframes contactRing {
+  0% { opacity: 0; transform: scale(.65); }
+  20% { opacity: .6; }
+  100% { opacity: 0; transform: scale(3.5); }
+}
+@keyframes contactSpark {
+  0% { opacity: 0; transform: scale(.65); }
+  35% { opacity: .8; transform: scale(1.05); }
+  100% { opacity: 0; transform: scale(1.12); }
+}
+@keyframes loaderWordmark {
+  to { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
 
 /* Section scene changes: subtle depth, scale and light shift as sections enter. */
 main > section { position: relative; isolation: isolate; }
@@ -715,17 +773,16 @@ main > section:not(.hero)::before {
 }
 
 @media (max-width: 800px) {
-  .loader-stage { width: min(440px, 86vw); }
+  .loader-stage { width: min(380px, 78vw); }
   .loader-wordmark { font-size: 8px; letter-spacing: .16em; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .handshake-left, .handshake-right, .hand-line, .cuff-line, .finger-line,
-  .contact-line, .contact-dot, .loader-ring, .loader-wordmark { animation: none !important; }
-  .handshake-left, .handshake-right { opacity: 1; transform: none; }
-  .hand-line, .cuff-line, .finger-line, .contact-line { stroke-dashoffset: 0; opacity: 1; }
-  .contact-dot { opacity: 1; }
-  .loader-ring { display: none; }
+  .hand-half-left, .hand-half-right, .contact-glow, .contact-ring, .contact-spark, .loader-wordmark {
+    animation: none !important;
+  }
+  .hand-half-left, .hand-half-right { opacity: 1; transform: none; }
+  .contact-glow, .contact-ring, .contact-spark { opacity: .3; }
   .loader-wordmark { opacity: 1; transform: translateX(-50%); }
 }
 

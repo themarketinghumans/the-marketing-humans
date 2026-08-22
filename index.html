@@ -12,31 +12,46 @@
   <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
 </head>
 <body class="is-loading">
-  <div id="site-loader" class="site-loader" aria-label="Connecting The Marketing Humans" aria-live="polite">
+  <div id="site-loader" class="site-loader" aria-label="The Marketing Humans intro" aria-live="polite">
     <div class="loader-stage" aria-hidden="true">
-      <svg class="handshake-art" viewBox="0 0 760 420" role="presentation">
+      <svg class="handshake-art" viewBox="0 0 24 24" role="presentation">
         <defs>
-          <linearGradient id="handGlow" x1="0" x2="1">
-            <stop offset="0" stop-color="#f5f5f7"/>
-            <stop offset="1" stop-color="#a1a1a6"/>
+          <linearGradient id="handStroke" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#cfcfd4"/>
+            <stop offset="0.5" stop-color="#ffffff"/>
+            <stop offset="1" stop-color="#b0b0b6"/>
           </linearGradient>
+          <clipPath id="handLeftClip"><rect x="0" y="0" width="12.15" height="24"/></clipPath>
+          <clipPath id="handRightClip"><rect x="11.85" y="0" width="12.15" height="24"/></clipPath>
+          <filter id="contactGlow" x="-100%" y="-100%" width="300%" height="300%">
+            <feGaussianBlur stdDeviation="1.1"/>
+          </filter>
         </defs>
-        <g class="handshake-left">
-          <path class="hand-fill" d="M48 242 L168 132 C188 114 215 107 242 113 L318 132 L376 188 L324 242 L266 205 L235 235 L194 218 L157 252 L116 236 L86 264 Z"/>
-          <path class="hand-line" d="M48 242 L168 132 C188 114 215 107 242 113 L318 132 L376 188 L324 242 L266 205 L235 235 L194 218 L157 252 L116 236 L86 264"/>
-          <path class="cuff-line" d="M48 242 L24 270 L112 350 L157 305"/>
-          <path class="finger-line" d="M266 205 L307 235 L347 207 M235 235 L278 268 L318 240 M194 218 L235 250 L275 221"/>
+
+        <!-- A real handshake silhouette, split into two moving halves. -->
+        <g class="hand-half hand-half-left" clip-path="url(#handLeftClip)">
+          <g class="hand-drawing">
+            <path d="m11 17 2 2a1 1 0 1 0 3-3" />
+            <path d="m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25L21 4" />
+            <path d="m21 3 1 11h-2" />
+            <path d="M3 3 2 14l6.5 6.5a1 1 0 1 0 3-3" />
+            <path d="M3 4h8" />
+          </g>
         </g>
-        <g class="handshake-right">
-          <path class="hand-fill" d="M712 242 L592 132 C572 114 545 107 518 113 L442 132 L384 188 L436 242 L494 205 L525 235 L566 218 L603 252 L644 236 L674 264 Z"/>
-          <path class="hand-line" d="M712 242 L592 132 C572 114 545 107 518 113 L442 132 L384 188 L436 242 L494 205 L525 235 L566 218 L603 252 L644 236 L674 264"/>
-          <path class="cuff-line" d="M712 242 L736 270 L648 350 L603 305"/>
-          <path class="finger-line" d="M494 205 L453 235 L413 207 M525 235 L482 268 L442 240 M566 218 L525 250 L485 221"/>
+        <g class="hand-half hand-half-right" clip-path="url(#handRightClip)">
+          <g class="hand-drawing">
+            <path d="m11 17 2 2a1 1 0 1 0 3-3" />
+            <path d="m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25L21 4" />
+            <path d="m21 3 1 11h-2" />
+            <path d="M3 3 2 14l6.5 6.5a1 1 0 1 0 3-3" />
+            <path d="M3 4h8" />
+          </g>
         </g>
-        <path class="contact-line" d="M333 188 C351 174 369 174 380 187 C391 174 409 174 427 188"/>
-        <circle class="contact-dot" cx="380" cy="188" r="5"/>
+
+        <circle class="contact-glow" cx="12" cy="12" r="1.2"/>
+        <circle class="contact-ring" cx="12" cy="12" r="1.9"/>
+        <path class="contact-spark" d="M12 8.8v-1.4 M12 15.2v1.4 M8.8 12H7.4 M15.2 12h1.4"/>
       </svg>
-      <span class="loader-ring"></span>
     </div>
     <p class="loader-wordmark">THE MARKETING HUMANS <span>·</span> IDEAS TO IMPACT</p>
   </div>

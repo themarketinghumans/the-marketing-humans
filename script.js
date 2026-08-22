@@ -112,6 +112,58 @@ document.querySelectorAll('.offerings-list .reveal, .work-grid .reveal, .approac
   el.style.transitionDelay = `${Math.min(i, 4) * 90}ms`;
 });
 
+// Original soft "connection ping" for the handshake reveal.
+// Browsers can block sound on page load; if that happens we arm it for the
+// visitor's first interaction without interrupting the visual intro.
+(() => {
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce) return;
+  let played = false;
+  const playConnectionPing = () => {
+    if (played) return;
+    played = true;
+    try {
+      const AudioCtx = window.AudioContext || window.webkitAudioContext;
+      if (!AudioCtx) return;
+      const ctx = new AudioCtx();
+      const now = ctx.currentTime;
+      const master = ctx.createGain();
+      master.gain.setValueAtTime(0.0001, now);
+      master.gain.exponentialRampToValueAtTime(0.055, now + 0.012);
+      master.gain.exponentialRampToValueAtTime(0.0001, now + 0.72);
+      master.connect(ctx.destination);
+
+      const osc = ctx.createOscillator();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(880, now);
+      osc.frequency.exponentialRampToValueAtTime(1320, now + 0.12);
+      osc.frequency.exponentialRampToValueAtTime(1040, now + 0.52);
+      osc.connect(master);
+      osc.start(now);
+      osc.stop(now + 0.72);
+
+      const shimmer = ctx.createOscillator();
+      const shimmerGain = ctx.createGain();
+      shimmer.type = 'sine';
+      shimmer.frequency.setValueAtTime(1760, now + 0.015);
+      shimmerGain.gain.setValueAtTime(0.0001, now);
+      shimmerGain.gain.exponentialRampToValueAtTime(0.018, now + 0.025);
+      shimmerGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.38);
+      shimmer.connect(shimmerGain).connect(ctx.destination);
+      shimmer.start(now);
+      shimmer.stop(now + 0.4);
+      window.setTimeout(() => ctx.close().catch(() => {}), 900);
+    } catch (_) {}
+  };
+
+  window.__tmhPlayPing = playConnectionPing;
+  ['pointerdown', 'keydown', 'touchstart'].forEach((eventName) => {
+    window.addEventListener(eventName, () => {
+      if (!played && window.__tmhIntroFinished) playConnectionPing();
+    }, { once: true, passive: true });
+  });
+})();
+
 // TMH cinematic interaction layer.
 (() => {
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -121,16 +173,18 @@ document.querySelectorAll('.offerings-list .reveal, .work-grid .reveal, .approac
   // Keep the handshake intro long enough to read, but never trap the visitor.
   const revealSite = () => {
     // Never leave the page locked if an external asset is slow or fails.
+    window.__tmhIntroFinished = true;
+    if (window.__tmhPlayPing) window.__tmhPlayPing();
     document.body.classList.remove('is-loading');
     document.body.classList.add('loaded');
-    window.setTimeout(() => loader.remove(), 1300);
+    window.setTimeout(() => loader.remove(), 900);
   };
 
   // Start the intro from DOMContentLoaded rather than waiting for every
   // external resource (e.g. Calendly) to finish loading.
   const startIntro = () => {
     // The handshake is self-contained CSS/SVG, so the reveal never waits for images or third-party scripts.
-    window.setTimeout(revealSite, reduce ? 100 : 2200);
+    window.setTimeout(revealSite, reduce ? 100 : 2050);
   };
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', startIntro, { once: true });
