@@ -164,6 +164,145 @@ button { font: inherit; }
 .service-arrow { text-align:right; font-size:22px; transition:transform .5s var(--ease); }
 .service-card:hover .service-arrow { transform:translate(5px,-5px); }
 
+
+/* Offerings section */
+.services-offerings {
+  background: #121212;
+  color: #f5f5f7;
+  overflow: hidden;
+}
+
+.services-offerings .section-inner {
+  padding-top: clamp(90px, 10vw, 150px);
+  padding-bottom: clamp(90px, 10vw, 150px);
+}
+
+.services-intro {
+  display: grid;
+  grid-template-columns: minmax(0, .9fr) minmax(0, 1.25fr);
+  column-gap: clamp(45px, 7vw, 100px);
+  align-items: end;
+  margin-bottom: 42px;
+}
+
+.services-heading {
+  min-width: 0;
+}
+
+.service-brand {
+  margin: 0 0 22px;
+  color: #a7a7ab;
+  font-size: 12px;
+  font-weight: 650;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+}
+
+.services-offerings .eyebrow {
+  color: #a7a7ab;
+  margin-bottom: 18px;
+}
+
+.services-offerings .services-heading h2 {
+  margin: 0;
+  max-width: 650px;
+  font-size: clamp(60px, 8vw, 112px);
+  line-height: .84;
+  letter-spacing: -.065em;
+  font-weight: 650;
+  color: #f5f5f7;
+}
+
+.services-offerings .services-heading h2 span {
+  color: #85858a;
+}
+
+.services-rule {
+  height: 2px;
+  width: min(100%, 640px);
+  background: #c6aa7d;
+  margin: 0 0 24px;
+}
+
+.services-tagline {
+  grid-column: 1 / -1;
+  margin: 34px 0 0;
+  color: #dedddd;
+  font-size: clamp(13px, 1.3vw, 17px);
+  line-height: 1.35;
+  font-weight: 650;
+  letter-spacing: .04em;
+}
+
+.offerings-grid {
+  display: grid;
+  grid-template-columns: 1.08fr .92fr;
+  grid-template-areas:
+    ". performance"
+    "social content"
+    "seo youtube";
+  gap: 34px 48px;
+  align-items: stretch;
+}
+
+.offering-card {
+  position: relative;
+  min-height: 190px;
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  padding: 28px 34px;
+  border: 2px solid #a88957;
+  border-radius: 46px;
+  background:
+    radial-gradient(circle at 25% 50%, rgba(75,75,75,.48), rgba(35,35,35,.92) 62%),
+    #242424;
+  box-shadow: 0 0 34px rgba(198,170,125,.08);
+  transition: transform .5s var(--ease), box-shadow .5s ease, border-color .5s ease;
+}
+
+.offering-card:hover {
+  transform: translateY(-4px);
+  border-color: #c6aa7d;
+  box-shadow: 0 14px 45px rgba(0,0,0,.3), 0 0 34px rgba(198,170,125,.13);
+}
+
+.offering-performance { grid-area: performance; }
+.offering-social { grid-area: social; }
+.offering-content { grid-area: content; }
+.offering-seo { grid-area: seo; margin-left: 8vw; }
+.offering-youtube { grid-area: youtube; }
+
+.offering-icon {
+  flex: 0 0 auto;
+  width: 126px;
+  height: 126px;
+  object-fit: contain;
+  display: block;
+}
+
+.offering-copy {
+  min-width: 0;
+}
+
+.offering-copy h3 {
+  margin: 0 0 14px;
+  color: #f5f5f7;
+  font-size: clamp(20px, 2vw, 29px);
+  line-height: .98;
+  letter-spacing: -.035em;
+  font-weight: 650;
+}
+
+.offering-copy p {
+  margin: 0;
+  max-width: 500px;
+  color: #d0d0d2;
+  font-size: clamp(14px, 1.25vw, 17px);
+  line-height: 1.22;
+  letter-spacing: -.01em;
+}
+
 .work-grid { display:grid; grid-template-columns:1.15fr .85fr; gap:20px; }
 .work-card { min-height:520px; display:flex; flex-direction:column; justify-content:space-between; overflow:hidden; border-radius:28px; }
 .work-card:nth-child(3) { grid-column:1/-1; min-height:430px; }
@@ -275,3 +414,56 @@ button { font: inherit; }
 }
 .contact-message span { color:inherit; }
 .contact-email { margin-top:26px; }
+
+@media (max-width: 800px) {
+  .services-intro {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .services-rule {
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  .services-tagline {
+    grid-column: auto;
+    margin-top: 0;
+  }
+
+  .offerings-grid {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "performance"
+      "social"
+      "content"
+      "seo"
+      "youtube";
+    gap: 20px;
+  }
+
+  .offering-card,
+  .offering-seo {
+    margin-left: 0;
+    min-height: 0;
+    padding: 24px 22px;
+    border-radius: 34px;
+    gap: 18px;
+  }
+
+  .offering-icon {
+    width: 78px;
+    height: 78px;
+  }
+
+  .offering-copy h3 {
+    font-size: clamp(20px, 6vw, 27px);
+    margin-bottom: 10px;
+  }
+
+  .offering-copy p {
+    font-size: 15px;
+    line-height: 1.3;
+  }
+}
+
