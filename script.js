@@ -49,3 +49,17 @@ window.addEventListener("pointermove", (e) => {
   orb.style.marginLeft = `${x}px`;
   orb.style.marginTop = `${y}px`;
 }, { passive: true });
+
+
+// Calendly booking popup.
+const calendlyUrl = "https://calendly.com/themarketinghumans";
+
+document.querySelectorAll(".book-call").forEach((link) => {
+  link.addEventListener("click", (event) => {
+    if (window.Calendly && typeof window.Calendly.initPopupWidget === "function") {
+      event.preventDefault();
+      window.Calendly.initPopupWidget({ url: calendlyUrl });
+    }
+    // If Calendly hasn't loaded, the normal href opens Calendly directly.
+  });
+});

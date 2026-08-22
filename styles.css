@@ -192,3 +192,29 @@ button { font: inherit; }
   .mobile-menu.open { transform:none; }
   .mobile-menu a { font-size:40px; letter-spacing:-.05em; padding:18px 0; border-bottom:1px solid var(--line); }
 }
+
+
+.contact-email {
+  margin: 18px auto 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+.contact-email a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.noscript-booking {
+  position: fixed;
+  inset: auto 20px 20px;
+  z-index: 200;
+  background: var(--ink);
+  color: #fff;
+  padding: 14px 18px;
+  border-radius: 14px;
+  text-align: center;
+  font-size: 14px;
+}
+.noscript-booking a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
