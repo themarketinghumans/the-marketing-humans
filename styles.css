@@ -867,3 +867,6 @@ main > section:not(.hero)::before {
   .loader-logo-right { display: none; }
   .loader-logo-full { display: block; }
 }
+
+/* Final safety: the intro must never lock page scrolling after it exits. */
+body.loaded { overflow-y: auto !important; }

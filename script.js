@@ -120,14 +120,25 @@ document.querySelectorAll('.offerings-list .reveal, .work-grid .reveal, .approac
 
   // Keep the handshake intro long enough to read, but never trap the visitor.
   const revealSite = () => {
+    // Never leave the page locked if an external asset is slow or fails.
+    document.body.classList.remove('is-loading');
     document.body.classList.add('loaded');
     window.setTimeout(() => loader.remove(), 1300);
   };
-  if (document.readyState === 'complete') {
+
+  // Start the intro from DOMContentLoaded rather than waiting for every
+  // external resource (e.g. Calendly) to finish loading.
+  const startIntro = () => {
     window.setTimeout(revealSite, reduce ? 100 : 1550);
+  };
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', startIntro, { once: true });
   } else {
-    window.addEventListener('load', () => window.setTimeout(revealSite, reduce ? 100 : 1550), { once: true });
+    startIntro();
   }
+
+  // Absolute safety valve: scrolling must never remain locked.
+  window.setTimeout(() => document.body.classList.remove('is-loading'), 4500);
 
   if (reduce) return;
 
