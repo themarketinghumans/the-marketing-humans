@@ -1200,3 +1200,62 @@ body.loaded .site-loader {
   .loader-brand-lockup { opacity: 1; transform: translateX(-50%); }
   .loader-stage { opacity: 1; transform: translate(-50%, -50%); }
 }
+
+/* =========================================================
+   LOADER POLISH — clean logo + subtle halo/rings
+   ========================================================= */
+.site-loader::after { display:none !important; }
+.site-loader::before {
+  inset:-8%;
+  background:
+    radial-gradient(circle at 50% 51%, rgba(255,255,255,.055) 0%, rgba(255,255,255,.018) 18%, transparent 42%),
+    radial-gradient(circle at 50% 51%, rgba(255,255,255,.018) 0%, transparent 58%);
+  filter: blur(16px);
+  opacity:1;
+  animation: tmhLoaderAuraSoft 5s ease-in-out infinite alternate;
+}
+.loader-logo-wrap {
+  border-color: rgba(255,255,255,.20);
+  background: rgba(255,255,255,.018);
+  box-shadow: 0 0 28px rgba(255,255,255,.035), inset 0 0 18px rgba(255,255,255,.018);
+}
+.loader-logo-wrap img {
+  width: 70%;
+  height: 70%;
+  object-fit: contain;
+  filter: drop-shadow(0 0 10px rgba(255,255,255,.12));
+}
+.loader-stage {
+  overflow: visible;
+}
+.loader-stage::before,
+.loader-stage::after {
+  content:"";
+  position:absolute;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%);
+  border-radius:50%;
+  pointer-events:none;
+  z-index:-1;
+}
+.loader-stage::before {
+  width:min(700px, 78vw);
+  height:min(700px, 78vw);
+  border:1px solid rgba(255,255,255,.055);
+  box-shadow:0 0 90px rgba(255,255,255,.025), inset 0 0 90px rgba(255,255,255,.012);
+}
+.loader-stage::after {
+  width:min(300px, 34vw);
+  height:min(300px, 34vw);
+  border:1px solid rgba(255,255,255,.045);
+  box-shadow:0 0 50px rgba(255,255,255,.035);
+}
+@keyframes tmhLoaderAuraSoft {
+  from { transform:scale(.98); opacity:.72; }
+  to { transform:scale(1.025); opacity:.96; }
+}
+@media (max-width:800px) {
+  .loader-stage::before { width:92vw; height:92vw; }
+  .loader-stage::after { width:42vw; height:42vw; }
+}
