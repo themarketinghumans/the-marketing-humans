@@ -112,68 +112,23 @@ document.querySelectorAll('.offerings-list .reveal, .work-grid .reveal, .approac
   el.style.transitionDelay = `${Math.min(i, 4) * 90}ms`;
 });
 
-// Cinematic Lottie handshake intro. The supplied Handshake.json is used directly.
+// TMH V3 handshake intro — exact newly supplied Handshake icon.json.
 (() => {
   const loader = document.querySelector('#site-loader');
   const container = document.querySelector('#handshake-animation');
   if (!loader || !container) return;
-
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  let finished = false;
-  let animation = null;
-
-  const finishIntro = () => {
-    if (finished) return;
-    finished = true;
-    loader.classList.add('connection-complete');
-    document.body.classList.remove('is-loading');
-    document.body.classList.add('loaded');
-    window.setTimeout(() => loader.remove(), 1150);
+  let done = false, anim = null, safety = null;
+  const finish = () => { if(done)return; done=true; if(safety)clearTimeout(safety); document.body.classList.remove('is-loading'); document.body.classList.add('loaded'); window.setTimeout(()=>loader.remove(), reduce?0:820); };
+  const init = () => {
+    if(!window.lottie){finish();return;}
+    try{
+      anim=window.lottie.loadAnimation({container,renderer:'svg',loop:false,autoplay:false,path:'tmh-handshake-icon-v3.json?v=20260823',rendererSettings:{preserveAspectRatio:'xMidYMid meet',progressiveLoad:false}});
+      anim.addEventListener('DOMLoaded',()=>{try{anim.playSegments([0,90],true)}catch(_){anim.play()}});
+      anim.addEventListener('complete',()=>window.setTimeout(finish,reduce?0:120));
+      anim.addEventListener('data_failed',finish); anim.addEventListener('error',finish);
+    }catch(_){finish()}
   };
-
-  const startAnimation = () => {
-    if (!window.lottie) { finishIntro(); return; }
-    try {
-      animation = window.lottie.loadAnimation({
-        container,
-        renderer: 'svg',
-        loop: false,
-        autoplay: true,
-        path: 'assets/Handshake.json',
-        rendererSettings: {
-          preserveAspectRatio: 'xMidYMid meet',
-          progressiveLoad: true,
-          hideOnTransparent: true
-        }
-      });
-      animation.setSpeed(reduce ? 2.4 : 1.55);
-      animation.addEventListener('complete', () => {
-        window.setTimeout(finishIntro, reduce ? 0 : 240);
-      });
-      animation.addEventListener('data_failed', finishIntro);
-    } catch (_) {
-      finishIntro();
-    }
-  };
-
-  // Wait only for the animation library, never for Calendly or other third-party assets.
-  const waitForLottie = () => {
-    if (window.lottie) { startAnimation(); return; }
-    let tries = 0;
-    const timer = window.setInterval(() => {
-      tries += 1;
-      if (window.lottie) { window.clearInterval(timer); startAnimation(); }
-      else if (tries > 30) { window.clearInterval(timer); finishIntro(); }
-    }, 50);
-  };
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', waitForLottie, { once: true });
-  } else {
-    waitForLottie();
-  }
-
-  // Hard fail-safe: the website must always become usable.
-  window.setTimeout(finishIntro, 6500);
+  safety=window.setTimeout(finish,5000);
+  if(window.lottie)init(); else {let tries=0;const wait=setInterval(()=>{if(window.lottie){clearInterval(wait);init()}else if(++tries>100){clearInterval(wait);finish()}},50)}
 })();
-
