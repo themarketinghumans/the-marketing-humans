@@ -1,3 +1,14 @@
+
+// Intro logo loader.
+const finishLoading = () => {
+  document.body.classList.remove("is-loading");
+  document.body.classList.add("loaded");
+};
+window.addEventListener("load", () => {
+  // Give the logo a moment to make the transition feel intentional.
+  window.setTimeout(finishLoading, 650);
+});
+
 const revealObserver = new IntersectionObserver((entries) => {
   entries.forEach((entry) => {
     if (entry.isIntersecting) {
