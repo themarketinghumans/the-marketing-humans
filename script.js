@@ -74,3 +74,50 @@ document.querySelectorAll(".book-call").forEach((link) => {
     // If Calendly hasn't loaded, the normal href opens Calendly directly.
   });
 });
+
+
+// Premium navigation + motion orchestration.
+const header = document.querySelector('.site-header');
+const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+const updateHeader = () => {
+  if (!header) return;
+  header.classList.toggle('scrolled', window.scrollY > 28);
+};
+window.addEventListener('scroll', updateHeader, { passive: true });
+updateHeader();
+
+// Smooth anchor transitions with header offset.
+document.querySelectorAll('a[href^="#"]').forEach((link) => {
+  link.addEventListener('click', (event) => {
+    const id = link.getAttribute('href');
+    const target = id && document.querySelector(id);
+    if (!target) return;
+    event.preventDefault();
+    document.documentElement.classList.add('is-navigating');
+    target.scrollIntoView({ behavior: prefersReduced ? 'auto' : 'smooth', block: 'start' });
+    window.setTimeout(() => document.documentElement.classList.remove('is-navigating'), prefersReduced ? 0 : 850);
+  });
+});
+
+// Small, elegant pointer depth on offering icons — intentionally restrained.
+if (!prefersReduced) {
+  document.querySelectorAll('.offering-row').forEach((row) => {
+    row.addEventListener('pointermove', (event) => {
+      const rect = row.getBoundingClientRect();
+      const x = (event.clientX - rect.left) / rect.width - .5;
+      const y = (event.clientY - rect.top) / rect.height - .5;
+      const mark = row.querySelector('.offering-mark');
+      if (mark) mark.style.transform = `translate(${x * 5}px, ${y * 5}px) scale(1.04)`;
+    });
+    row.addEventListener('pointerleave', () => {
+      const mark = row.querySelector('.offering-mark');
+      if (mark) mark.style.transform = '';
+    });
+  });
+}
+
+// Add staggered reveal timing by section for a more cinematic rhythm.
+document.querySelectorAll('.offerings-list .reveal, .work-grid .reveal, .approach-steps .reveal').forEach((el, i) => {
+  el.style.transitionDelay = `${Math.min(i, 4) * 90}ms`;
+});
