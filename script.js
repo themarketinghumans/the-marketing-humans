@@ -112,107 +112,68 @@ document.querySelectorAll('.offerings-list .reveal, .work-grid .reveal, .approac
   el.style.transitionDelay = `${Math.min(i, 4) * 90}ms`;
 });
 
-// Original soft "connection ping" for the handshake reveal.
-// Browsers can block sound on page load; if that happens we arm it for the
-// visitor's first interaction without interrupting the visual intro.
+// Cinematic Lottie handshake intro. The supplied Handshake.json is used directly.
 (() => {
-  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (reduce) return;
-  let played = false;
-  const playConnectionPing = () => {
-    if (played) return;
-    played = true;
-    try {
-      const AudioCtx = window.AudioContext || window.webkitAudioContext;
-      if (!AudioCtx) return;
-      const ctx = new AudioCtx();
-      const now = ctx.currentTime;
-      const master = ctx.createGain();
-      master.gain.setValueAtTime(0.0001, now);
-      master.gain.exponentialRampToValueAtTime(0.055, now + 0.012);
-      master.gain.exponentialRampToValueAtTime(0.0001, now + 0.72);
-      master.connect(ctx.destination);
-
-      const osc = ctx.createOscillator();
-      osc.type = 'sine';
-      osc.frequency.setValueAtTime(880, now);
-      osc.frequency.exponentialRampToValueAtTime(1320, now + 0.12);
-      osc.frequency.exponentialRampToValueAtTime(1040, now + 0.52);
-      osc.connect(master);
-      osc.start(now);
-      osc.stop(now + 0.72);
-
-      const shimmer = ctx.createOscillator();
-      const shimmerGain = ctx.createGain();
-      shimmer.type = 'sine';
-      shimmer.frequency.setValueAtTime(1760, now + 0.015);
-      shimmerGain.gain.setValueAtTime(0.0001, now);
-      shimmerGain.gain.exponentialRampToValueAtTime(0.018, now + 0.025);
-      shimmerGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.38);
-      shimmer.connect(shimmerGain).connect(ctx.destination);
-      shimmer.start(now);
-      shimmer.stop(now + 0.4);
-      window.setTimeout(() => ctx.close().catch(() => {}), 900);
-    } catch (_) {}
-  };
-
-  window.__tmhPlayPing = playConnectionPing;
-  ['pointerdown', 'keydown', 'touchstart'].forEach((eventName) => {
-    window.addEventListener(eventName, () => {
-      if (!played && window.__tmhIntroFinished) playConnectionPing();
-    }, { once: true, passive: true });
-  });
-})();
-
-// TMH cinematic interaction layer.
-(() => {
-  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const loader = document.querySelector('#site-loader');
-  if (!loader) return;
+  const container = document.querySelector('#handshake-animation');
+  if (!loader || !container) return;
 
-  // Keep the handshake intro long enough to read, but never trap the visitor.
-  const revealSite = () => {
-    // Never leave the page locked if an external asset is slow or fails.
-    window.__tmhIntroFinished = true;
-    if (window.__tmhPlayPing) window.__tmhPlayPing();
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let finished = false;
+  let animation = null;
+
+  const finishIntro = () => {
+    if (finished) return;
+    finished = true;
+    loader.classList.add('connection-complete');
     document.body.classList.remove('is-loading');
     document.body.classList.add('loaded');
-    window.setTimeout(() => loader.remove(), 900);
+    window.setTimeout(() => loader.remove(), 1150);
   };
 
-  // Start the intro from DOMContentLoaded rather than waiting for every
-  // external resource (e.g. Calendly) to finish loading.
-  const startIntro = () => {
-    // The handshake is self-contained CSS/SVG, so the reveal never waits for images or third-party scripts.
-    window.setTimeout(revealSite, reduce ? 100 : 2050);
+  const startAnimation = () => {
+    if (!window.lottie) { finishIntro(); return; }
+    try {
+      animation = window.lottie.loadAnimation({
+        container,
+        renderer: 'svg',
+        loop: false,
+        autoplay: true,
+        path: 'assets/Handshake.json',
+        rendererSettings: {
+          preserveAspectRatio: 'xMidYMid meet',
+          progressiveLoad: true,
+          hideOnTransparent: true
+        }
+      });
+      animation.setSpeed(reduce ? 2.4 : 1.55);
+      animation.addEventListener('complete', () => {
+        window.setTimeout(finishIntro, reduce ? 0 : 240);
+      });
+      animation.addEventListener('data_failed', finishIntro);
+    } catch (_) {
+      finishIntro();
+    }
   };
+
+  // Wait only for the animation library, never for Calendly or other third-party assets.
+  const waitForLottie = () => {
+    if (window.lottie) { startAnimation(); return; }
+    let tries = 0;
+    const timer = window.setInterval(() => {
+      tries += 1;
+      if (window.lottie) { window.clearInterval(timer); startAnimation(); }
+      else if (tries > 30) { window.clearInterval(timer); finishIntro(); }
+    }, 50);
+  };
+
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', startIntro, { once: true });
+    document.addEventListener('DOMContentLoaded', waitForLottie, { once: true });
   } else {
-    startIntro();
+    waitForLottie();
   }
 
-  // Absolute safety valve: scrolling must never remain locked.
-  window.setTimeout(() => document.body.classList.remove('is-loading'), 4500);
-
-  if (reduce) return;
-
-  // Magnetic, very small header CTA movement.
-  document.querySelectorAll('.nav-cta').forEach((button) => {
-    button.addEventListener('pointermove', (event) => {
-      const r = button.getBoundingClientRect();
-      const x = (event.clientX - r.left) / r.width - .5;
-      const y = (event.clientY - r.top) / r.height - .5;
-      button.style.transform = `translate(${x * 4}px, ${y * 3}px)`;
-    });
-    button.addEventListener('pointerleave', () => { button.style.transform = ''; });
-  });
-
-  // Scene-change glow when navigating between anchored sections.
-  document.querySelectorAll('a[href^="#"]').forEach((link) => {
-    link.addEventListener('click', () => {
-      document.documentElement.classList.add('is-navigating');
-      window.setTimeout(() => document.documentElement.classList.remove('is-navigating'), 900);
-    });
-  });
+  // Hard fail-safe: the website must always become usable.
+  window.setTimeout(finishIntro, 6500);
 })();
+
