@@ -1,14 +1,4 @@
 
-// Intro logo loader.
-const finishLoading = () => {
-  document.body.classList.remove("is-loading");
-  document.body.classList.add("loaded");
-};
-window.addEventListener("load", () => {
-  // Give the logo a moment to make the transition feel intentional.
-  window.setTimeout(finishLoading, 650);
-});
-
 const revealObserver = new IntersectionObserver((entries) => {
   entries.forEach((entry) => {
     if (entry.isIntersecting) {
@@ -121,3 +111,42 @@ if (!prefersReduced) {
 document.querySelectorAll('.offerings-list .reveal, .work-grid .reveal, .approach-steps .reveal').forEach((el, i) => {
   el.style.transitionDelay = `${Math.min(i, 4) * 90}ms`;
 });
+
+// TMH cinematic interaction layer.
+(() => {
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const loader = document.querySelector('#site-loader');
+  if (!loader) return;
+
+  // Keep the handshake intro long enough to read, but never trap the visitor.
+  const revealSite = () => {
+    document.body.classList.add('loaded');
+    window.setTimeout(() => loader.remove(), 1300);
+  };
+  if (document.readyState === 'complete') {
+    window.setTimeout(revealSite, reduce ? 100 : 1550);
+  } else {
+    window.addEventListener('load', () => window.setTimeout(revealSite, reduce ? 100 : 1550), { once: true });
+  }
+
+  if (reduce) return;
+
+  // Magnetic, very small header CTA movement.
+  document.querySelectorAll('.nav-cta').forEach((button) => {
+    button.addEventListener('pointermove', (event) => {
+      const r = button.getBoundingClientRect();
+      const x = (event.clientX - r.left) / r.width - .5;
+      const y = (event.clientY - r.top) / r.height - .5;
+      button.style.transform = `translate(${x * 4}px, ${y * 3}px)`;
+    });
+    button.addEventListener('pointerleave', () => { button.style.transform = ''; });
+  });
+
+  // Scene-change glow when navigating between anchored sections.
+  document.querySelectorAll('a[href^="#"]').forEach((link) => {
+    link.addEventListener('click', () => {
+      document.documentElement.classList.add('is-navigating');
+      window.setTimeout(() => document.documentElement.classList.remove('is-navigating'), 900);
+    });
+  });
+})();
