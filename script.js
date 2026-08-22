@@ -112,23 +112,18 @@ document.querySelectorAll('.offerings-list .reveal, .work-grid .reveal, .approac
   el.style.transitionDelay = `${Math.min(i, 4) * 90}ms`;
 });
 
-// TMH V3 handshake intro — exact newly supplied Handshake icon.json.
+// TMH intro: the supplied handshake animation is rendered as a local SVG.
+// The source JSON's actual motion ends at frame 60; the final 30 frames are a hold,
+// so the loader exits after the 1-second motion instead of lingering.
 (() => {
   const loader = document.querySelector('#site-loader');
-  const container = document.querySelector('#handshake-animation');
-  if (!loader || !container) return;
+  if (!loader) return;
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  let done = false, anim = null, safety = null;
-  const finish = () => { if(done)return; done=true; if(safety)clearTimeout(safety); document.body.classList.remove('is-loading'); document.body.classList.add('loaded'); window.setTimeout(()=>loader.remove(), reduce?0:820); };
-  const init = () => {
-    if(!window.lottie){finish();return;}
-    try{
-      anim=window.lottie.loadAnimation({container,renderer:'svg',loop:false,autoplay:false,path:'tmh-handshake-icon-v3.json?v=20260823',rendererSettings:{preserveAspectRatio:'xMidYMid meet',progressiveLoad:false}});
-      anim.addEventListener('DOMLoaded',()=>{try{anim.playSegments([0,90],true)}catch(_){anim.play()}});
-      anim.addEventListener('complete',()=>window.setTimeout(finish,reduce?0:120));
-      anim.addEventListener('data_failed',finish); anim.addEventListener('error',finish);
-    }catch(_){finish()}
+  const finish = () => {
+    document.body.classList.remove('is-loading');
+    document.body.classList.add('loaded');
+    window.setTimeout(() => loader.remove(), reduce ? 0 : 820);
   };
-  safety=window.setTimeout(finish,5000);
-  if(window.lottie)init(); else {let tries=0;const wait=setInterval(()=>{if(window.lottie){clearInterval(wait);init()}else if(++tries>100){clearInterval(wait);finish()}},50)}
+  // Let the SVG handshake complete, then use a soft Apple-like fade into the site.
+  window.setTimeout(finish, reduce ? 250 : 1250);
 })();

@@ -67,8 +67,8 @@ body.loaded .site-loader { opacity:0; visibility:hidden; pointer-events:none; }
   opacity:0; transform:translateY(12px) scale(.975);
   animation: handshakeIn 1050ms cubic-bezier(.22,1,.36,1) .26s forwards;
 }
-.handshake-animation { width:100%; height:100%; filter:brightness(0) invert(1) drop-shadow(0 0 18px rgba(255,255,255,.08)); }
-.handshake-animation svg { width:100% !important; height:100% !important; display:block; overflow:visible; }
+.handshake-animation { width:100%; height:100%; display:grid; place-items:center; overflow:visible; filter:drop-shadow(0 0 18px rgba(255,255,255,.08)); }
+.handshake-animation svg { width:100%; height:100%; display:block; overflow:visible; }
 .loader-rings { position:absolute; left:50%; top:58%; width:min(360px,40vw); aspect-ratio:1; transform:translate(-50%,-50%); z-index:1; pointer-events:none; opacity:.7; }
 .loader-rings span { position:absolute; inset:0; border:1px solid rgba(255,255,255,.055); border-radius:50%; transform:scale(.55); }
 .loader-rings span:nth-child(2) { inset:9%; transform:scale(.7); opacity:.65; }
