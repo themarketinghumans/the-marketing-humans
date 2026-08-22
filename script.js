@@ -129,7 +129,8 @@ document.querySelectorAll('.offerings-list .reveal, .work-grid .reveal, .approac
   // Start the intro from DOMContentLoaded rather than waiting for every
   // external resource (e.g. Calendly) to finish loading.
   const startIntro = () => {
-    window.setTimeout(revealSite, reduce ? 100 : 1550);
+    // The handshake is self-contained CSS/SVG, so the reveal never waits for images or third-party scripts.
+    window.setTimeout(revealSite, reduce ? 100 : 2200);
   };
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', startIntro, { once: true });
