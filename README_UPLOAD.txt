@@ -1,14 +1,15 @@
-TMH QUICK INTRO UPDATE
+THE MARKETING HUMANS — V11 ABSTRACT CINEMATIC INTRO
 
-Replace the existing website files with the files in this ZIP.
-Upload ALL files/folders in this ZIP to the repository root.
+This version removes the handshake/rotating-globe intro and replaces it with a short, responsive abstract motion intro inspired by the supplied reference video.
 
-The intro is intentionally short (~2.3 seconds):
-- subtle black/grey halo
-- fast editorial light sweeps
-- TMH logo reveal
-- THE MARKETING HUMANS / IDEAS TO IMPACT kinetic reveal
-- quick fade/scale transition into the website
+Intro behaviour:
+- ~2.35s maximum intro
+- soft moving light/blur fields
+- thin orbital curves and subtle particles
+- TMH logo + THE MARKETING HUMANS + IDEAS TO IMPACT
+- smooth fade/scale transition into the website
+- mobile-safe, viewport-centered positioning
+- no external animation JSON dependency
+- no broken image/question-mark loader
 
-No handshake or globe animation is used.
-The intro is responsive for desktop and mobile and does not block scrolling after it finishes.
+Upload the contents of the tmh_v9 folder to the same website root, replacing the previous version's files.

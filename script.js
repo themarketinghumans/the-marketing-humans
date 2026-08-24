@@ -113,18 +113,28 @@ document.querySelectorAll('.offerings-list .reveal, .work-grid .reveal, .approac
 });
 
 // TMH quick cinematic intro.
+// The intro is intentionally short: abstract light/orbit motion first, then the site.
 (() => {
   const loader = document.querySelector('#site-loader');
   if (!loader) return;
-  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // Short, intentional opener: reveal the actual website quickly.
-  const duration = reduce ? 650 : 2300;
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const duration = reduce ? 450 : 2350;
+  let finished = false;
+
   const finish = () => {
+    if (finished) return;
+    finished = true;
     document.body.classList.remove('is-loading');
     document.body.classList.add('loaded');
-    window.setTimeout(() => loader.remove(), reduce ? 0 : 700);
+    window.setTimeout(() => loader.remove(), reduce ? 0 : 620);
   };
 
+  // Never leave the user looking at the intro if the page finishes loading unusually slowly.
   window.setTimeout(finish, duration);
+  window.addEventListener('load', () => {
+    window.setTimeout(() => {
+      if (document.readyState === 'complete') finish();
+    }, reduce ? 120 : 1550);
+  }, { once: true });
 })();
