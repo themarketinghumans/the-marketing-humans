@@ -2492,3 +2492,20 @@ body.loaded .site-loader {
 @media (prefers-reduced-motion: reduce) {
   .loader-halo,.loader-logo-wrap,.loader-title,.loader-subtitle,.human-connection-stage,.human-arm-left,.human-arm-right,.loader-tagline,.loader-line,.connection-pulse { animation:none !important; opacity:1 !important; transform:none !important; }
 }
+
+/* TMH HEADER LOGO — adaptive contrast on light + dark backgrounds */
+.site-header .brand {
+  isolation: isolate;
+  position: relative;
+}
+.site-header .brand img {
+  mix-blend-mode: difference !important;
+  filter: none !important;
+  opacity: 1 !important;
+  transition: transform .7s var(--motion-slow), opacity .3s ease;
+}
+/* Keep the logo crisp while letting its white artwork invert naturally:
+   white artwork -> black on light surfaces, white on dark surfaces. */
+@media (prefers-reduced-motion: reduce) {
+  .site-header .brand img { transition: none !important; }
+}

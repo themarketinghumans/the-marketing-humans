@@ -1,15 +1,17 @@
-THE MARKETING HUMANS — V11 ABSTRACT CINEMATIC INTRO
+THE MARKETING HUMANS — WEBSITE UPLOAD
 
-This version removes the handshake/rotating-globe intro and replaces it with a short, responsive abstract motion intro inspired by the supplied reference video.
+Upload/replace the contents of this folder on the website hosting.
 
-Intro behaviour:
-- ~2.35s maximum intro
-- soft moving light/blur fields
-- thin orbital curves and subtle particles
-- TMH logo + THE MARKETING HUMANS + IDEAS TO IMPACT
-- smooth fade/scale transition into the website
-- mobile-safe, viewport-centered positioning
-- no external animation JSON dependency
-- no broken image/question-mark loader
+Latest fix:
+- Header TMH logo now uses adaptive contrast via blend mode.
+- It remains visible on both light/white and dark/black backgrounds.
+- No separate logo switching or JavaScript dependency is required.
+- Existing site content and animation are otherwise unchanged.
 
-Upload the contents of the tmh_v9 folder to the same website root, replacing the previous version's files.
+Main files:
+index.html
+styles.css
+script.js
+TMH-mark-white.png
+TMH LOGO.png
+favicon.png
