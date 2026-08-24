@@ -2663,3 +2663,41 @@ html, body {
     text-align: left;
   }
 }
+
+/* =========================================================
+   FINAL GLYPH VISIBILITY FIX
+   Keep oversized typography fully visible vertically.
+   The previous overflow: clip on dark sections was cutting
+   descenders and the bottom of large display letters.
+   ========================================================= */
+.statement,
+.big-type {
+  overflow: visible !important;
+  overflow-x: visible !important;
+  overflow-y: visible !important;
+}
+
+.statement-title,
+.section-heading h2,
+.approach h2,
+.contact h2,
+.big-type-line {
+  overflow: visible !important;
+  padding-bottom: .10em !important;
+  line-height: 1.02 !important;
+}
+
+.big-type-line {
+  margin-bottom: .02em !important;
+}
+
+@media (max-width: 800px) {
+  .statement-title,
+  .section-heading h2,
+  .approach h2,
+  .contact h2,
+  .big-type-line {
+    line-height: 1.04 !important;
+    padding-bottom: .12em !important;
+  }
+}
