@@ -2701,3 +2701,104 @@ html, body {
     padding-bottom: .12em !important;
   }
 }
+
+
+/* Motion manifesto — the supplied film is integrated as a native TMH section.
+   The source blue palette is converted to a soft monochrome treatment so it
+   feels native to the site's black / white / graphite visual system. */
+.motion-manifesto {
+  min-height: 92svh;
+  position: relative;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  isolation: isolate;
+  background:
+    radial-gradient(circle at 50% 48%, rgba(255,255,255,.98) 0 18%, rgba(245,245,247,.92) 48%, rgba(232,233,236,.9) 100%);
+  padding: clamp(70px, 9vw, 120px) clamp(18px, 4vw, 64px);
+}
+.motion-frame {
+  position: relative;
+  width: min(1180px, 92vw);
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: clamp(22px, 3vw, 42px);
+  background: #e8e8eb;
+  box-shadow:
+    0 40px 100px rgba(29,29,31,.13),
+    0 0 0 1px rgba(29,29,31,.07);
+  transform: translateZ(0);
+}
+.motion-video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(1) invert(1) contrast(.9) brightness(1.03);
+  transform: scale(1.012);
+}
+.motion-sheen {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 50% 48%, rgba(255,255,255,.06), transparent 44%),
+    linear-gradient(180deg, rgba(255,255,255,.10), transparent 22%, transparent 78%, rgba(29,29,31,.04));
+  mix-blend-mode: screen;
+}
+.motion-orb {
+  position: absolute;
+  border: 1px solid rgba(29,29,31,.07);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: -1;
+}
+.motion-orb-a {
+  width: min(75vw, 920px);
+  aspect-ratio: 1;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+.motion-orb-b {
+  width: min(105vw, 1320px);
+  aspect-ratio: 1;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border-color: rgba(29,29,31,.045);
+}
+.motion-meta {
+  position: absolute;
+  left: clamp(24px, 4vw, 64px);
+  right: clamp(24px, 4vw, 64px);
+  bottom: clamp(22px, 3vw, 38px);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #86868b;
+  font-size: 10px;
+  font-weight: 650;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+}
+@media (max-width: 800px) {
+  .motion-manifesto {
+    min-height: 72svh;
+    padding: 58px 16px 86px;
+  }
+  .motion-frame {
+    width: 100%;
+    border-radius: 24px;
+    aspect-ratio: 16 / 10;
+  }
+  .motion-video { transform: scale(1.015); }
+  .motion-meta {
+    bottom: 22px;
+    font-size: 8px;
+    letter-spacing: .13em;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .motion-video { animation: none; }
+}
