@@ -112,9 +112,7 @@ document.querySelectorAll('.offerings-list .reveal, .work-grid .reveal, .approac
   el.style.transitionDelay = `${Math.min(i, 4) * 90}ms`;
 });
 
-// TMH intro: the supplied handshake animation is rendered as a local SVG.
-// The source JSON's actual motion ends at frame 60; the final 30 frames are a hold,
-// so the loader exits after the 1-second motion instead of lingering.
+// TMH V8 intro — self-contained rotating globe.
 (() => {
   const loader = document.querySelector('#site-loader');
   if (!loader) return;
@@ -122,8 +120,8 @@ document.querySelectorAll('.offerings-list .reveal, .work-grid .reveal, .approac
   const finish = () => {
     document.body.classList.remove('is-loading');
     document.body.classList.add('loaded');
-    window.setTimeout(() => loader.remove(), reduce ? 0 : 820);
+    window.setTimeout(() => loader.remove(), reduce ? 0 : 900);
   };
-  // Let the SVG handshake complete, then use a soft Apple-like fade into the site.
-  window.setTimeout(finish, reduce ? 350 : 2150);
+  // The globe has its own CSS motion; allow the full editorial intro to breathe before the reveal.
+  window.setTimeout(finish, reduce ? 500 : 3000);
 })();
