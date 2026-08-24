@@ -13,55 +13,47 @@
 </head>
 <body class="is-loading">
   <div id="site-loader" class="site-loader" aria-label="The Marketing Humans intro" aria-live="polite">
-    <div class="loader-backdrop" aria-hidden="true"></div>
-    <div class="loader-orbit orbit-a" aria-hidden="true"></div>
-    <div class="loader-orbit orbit-b" aria-hidden="true"></div>
-
-    <div class="loader-brand-lockup">
+    <div class="loader-halo" aria-hidden="true"></div>
+    <div class="loader-content">
       <div class="loader-logo-wrap">
         <img src="TMH-mark-white.png" alt="The Marketing Humans logo">
       </div>
       <div class="loader-title">THE MARKETING HUMANS</div>
       <div class="loader-subtitle"><span></span><em>IDEAS TO IMPACT</em><span></span></div>
-    </div>
 
-    <div class="globe-stage" aria-hidden="true">
-      <div class="globe-aura"></div>
-      <div class="globe">
-        <svg class="globe-svg" viewBox="0 0 420 420" xmlns="http://www.w3.org/2000/svg" role="presentation">
+      <div class="human-connection-stage" aria-hidden="true">
+        <div class="connection-glow"></div>
+        <svg class="human-connection" viewBox="0 0 1200 520" xmlns="http://www.w3.org/2000/svg" role="presentation">
           <defs>
-            <radialGradient id="globeCore" cx="50%" cy="42%" r="62%">
-              <stop offset="0" stop-color="#ffffff" stop-opacity=".085"/>
-              <stop offset=".55" stop-color="#ffffff" stop-opacity=".018"/>
-              <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
-            </radialGradient>
-            <filter id="globeGlow" x="-60%" y="-60%" width="220%" height="220%">
-              <feGaussianBlur stdDeviation="2.5" result="blur"/>
-              <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+            <linearGradient id="armLight" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#f7f7f7"/>
+              <stop offset=".55" stop-color="#ffffff"/>
+              <stop offset="1" stop-color="#d8d8d8"/>
+            </linearGradient>
+            <filter id="softHandGlow" x="-30%" y="-40%" width="160%" height="180%">
+              <feGaussianBlur stdDeviation="8" result="b"/>
+              <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
             </filter>
-            <clipPath id="globeClip"><circle cx="210" cy="210" r="154"/></clipPath>
           </defs>
-          <circle cx="210" cy="210" r="154" fill="url(#globeCore)"/>
-          <g class="globe-grid" clip-path="url(#globeClip)" fill="none" stroke="#ffffff" stroke-linecap="round">
-            <ellipse class="lat lat-1" cx="210" cy="210" rx="145" ry="45"/>
-            <ellipse class="lat lat-2" cx="210" cy="210" rx="145" ry="92"/>
-            <ellipse class="lat lat-3" cx="210" cy="210" rx="145" ry="125"/>
-            <ellipse class="lat lat-4" cx="210" cy="210" rx="145" ry="145"/>
 
-            <ellipse class="lon lon-1" cx="210" cy="210" rx="38" ry="154"/>
-            <ellipse class="lon lon-2" cx="210" cy="210" rx="78" ry="154"/>
-            <ellipse class="lon lon-3" cx="210" cy="210" rx="118" ry="154"/>
-            <ellipse class="lon lon-4" cx="210" cy="210" rx="145" ry="154"/>
+          <!-- Left human arm + hand -->
+          <g class="human-arm human-arm-left" filter="url(#softHandGlow)">
+            <path fill="url(#armLight)" d="M-45 210 C95 210 220 232 344 272 C402 291 458 314 510 329 C529 335 543 349 547 365 C550 378 543 390 531 397 C518 405 501 403 486 396 L445 378 C459 395 467 408 460 419 C453 431 436 432 421 422 L386 399 C399 415 403 429 395 438 C386 449 369 445 355 434 L320 406 C331 422 332 436 322 443 C310 451 296 444 285 433 L245 392 C226 374 207 361 183 350 C129 325 68 316 -45 316 Z"/>
+            <path fill="#ededed" d="M493 345 C510 344 527 350 538 361 C548 372 548 386 539 395 C530 404 516 405 504 399 L476 384 C463 377 458 364 464 354 C469 347 480 344 493 345Z"/>
           </g>
-          <circle class="globe-outline" cx="210" cy="210" r="154" fill="none" stroke="#ffffff" stroke-opacity=".34"/>
-          <circle class="globe-highlight" cx="162" cy="130" r="72" fill="none" stroke="#ffffff" stroke-opacity=".08" filter="url(#globeGlow)"/>
-          <path class="globe-sweep" d="M58 245 A154 154 0 0 0 360 245" fill="none" stroke="#ffffff" stroke-opacity=".26" stroke-width="1.5" stroke-linecap="round"/>
-          <circle class="globe-point" cx="210" cy="56" r="2.2" fill="#fff" opacity=".7"/>
-        </svg>
-      </div>
-    </div>
 
-    <div class="loader-status" aria-hidden="true"><span></span></div>
+          <!-- Right human arm + hand -->
+          <g class="human-arm human-arm-right" filter="url(#softHandGlow)">
+            <path fill="url(#armLight)" d="M1245 210 C1105 210 980 232 856 272 C798 291 742 314 690 329 C671 335 657 349 653 365 C650 378 657 390 669 397 C682 405 699 403 714 396 L755 378 C741 395 733 408 740 419 C747 431 764 432 779 422 L814 399 C801 415 797 429 805 438 C814 449 831 445 845 434 L880 406 C869 422 868 436 878 443 C890 451 904 444 915 433 L955 392 C974 374 993 361 1017 350 C1071 325 1132 316 1245 316 Z"/>
+            <path fill="#ededed" d="M707 345 C690 344 673 350 662 361 C652 372 652 386 661 395 C670 404 684 405 696 399 L724 384 C737 377 742 364 736 354 C731 347 720 344 707 345Z"/>
+          </g>
+        </svg>
+        <div class="connection-pulse" aria-hidden="true"></div>
+      </div>
+
+      <div class="loader-tagline">MARKETING, MADE HUMAN.</div>
+    </div>
+    <div class="loader-line" aria-hidden="true"></div>
   </div>
 
   <div class="scroll-progress" aria-hidden="true"></div>

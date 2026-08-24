@@ -112,16 +112,19 @@ document.querySelectorAll('.offerings-list .reveal, .work-grid .reveal, .approac
   el.style.transitionDelay = `${Math.min(i, 4) * 90}ms`;
 });
 
-// TMH V8 intro — self-contained rotating globe.
+// TMH cinematic human-connection intro.
 (() => {
   const loader = document.querySelector('#site-loader');
   if (!loader) return;
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Keep the intro short and deliberate: reveal the site only after the connection resolves.
+  const duration = reduce ? 850 : 4300;
   const finish = () => {
     document.body.classList.remove('is-loading');
     document.body.classList.add('loaded');
     window.setTimeout(() => loader.remove(), reduce ? 0 : 900);
   };
-  // The globe has its own CSS motion; allow the full editorial intro to breathe before the reveal.
-  window.setTimeout(finish, reduce ? 500 : 3000);
+
+  window.setTimeout(finish, duration);
 })();

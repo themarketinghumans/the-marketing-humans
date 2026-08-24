@@ -2101,3 +2101,227 @@ body.loaded .site-loader {
 /* SVG transform normalization: keeps every meridian centered on Safari/iOS. */
 .globe-grid ellipse { transform-box: fill-box; transform-origin: center; }
 .globe-highlight { transform-box: fill-box; transform-origin: center; }
+
+/* =========================================================
+   TMH V9 — HUMAN CONNECTION INTRO
+   Replaces the globe/loader with a cinematic, responsive
+   reaching-hands sequence inspired by the supplied reference.
+   ========================================================= */
+body.is-loading { overflow: hidden !important; }
+
+.site-loader {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 99999 !important;
+  display: grid !important;
+  place-items: center !important;
+  overflow: hidden !important;
+  isolation: isolate !important;
+  background: #050505 !important;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity .9s cubic-bezier(.16,1,.3,1), visibility 0s linear .9s !important;
+}
+
+.site-loader::before,
+.site-loader::after { display:none !important; content:none !important; }
+
+.loader-halo {
+  position:absolute;
+  left:50%; top:50%;
+  width:min(72vw,920px);
+  height:min(72vw,920px);
+  transform:translate(-50%,-50%);
+  border-radius:50%;
+  background:
+    radial-gradient(circle, rgba(255,255,255,.055) 0%, rgba(255,255,255,.025) 24%, rgba(255,255,255,0) 67%);
+  filter:blur(10px);
+  opacity:0;
+  animation:tmhHaloIn 1800ms cubic-bezier(.16,1,.3,1) .05s forwards;
+  pointer-events:none;
+}
+
+.loader-content {
+  position:relative !important;
+  z-index:3 !important;
+  width:min(1240px,94vw) !important;
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:center !important;
+  text-align:center !important;
+  padding:20px !important;
+  opacity:1 !important;
+  transform:none !important;
+  animation:none !important;
+}
+
+.loader-logo-wrap {
+  width:clamp(58px,5vw,76px) !important;
+  height:clamp(58px,5vw,76px) !important;
+  margin:0 0 19px !important;
+  display:grid !important;
+  place-items:center !important;
+  padding:9px !important;
+  border:1px solid rgba(255,255,255,.14) !important;
+  border-radius:18px !important;
+  background:rgba(255,255,255,.018) !important;
+  box-shadow:0 0 40px rgba(255,255,255,.035) !important;
+  opacity:0;
+  transform:translateY(12px) scale(.96);
+  animation:tmhLockupIn 900ms cubic-bezier(.16,1,.3,1) .12s forwards !important;
+}
+.loader-logo-wrap img {
+  width:100% !important;
+  height:100% !important;
+  object-fit:contain !important;
+  display:block !important;
+  filter:none !important;
+}
+.loader-title {
+  margin:0 !important;
+  color:#f7f7f7 !important;
+  font-size:clamp(20px,2.45vw,36px) !important;
+  font-weight:700 !important;
+  letter-spacing:.17em !important;
+  line-height:1.08 !important;
+  white-space:nowrap !important;
+  opacity:0;
+  transform:translateY(10px);
+  animation:tmhLockupIn 900ms cubic-bezier(.16,1,.3,1) .2s forwards !important;
+}
+.loader-subtitle {
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  gap:20px !important;
+  margin-top:12px !important;
+  color:rgba(255,255,255,.56) !important;
+  font-size:11px !important;
+  font-weight:600 !important;
+  letter-spacing:.34em !important;
+  line-height:1 !important;
+  opacity:0;
+  transform:translateY(8px);
+  animation:tmhLockupIn 900ms cubic-bezier(.16,1,.3,1) .27s forwards !important;
+}
+.loader-subtitle span { width:58px !important; height:1px !important; background:rgba(255,255,255,.22) !important; }
+.loader-subtitle em { font-style:normal !important; }
+
+.human-connection-stage {
+  position:relative !important;
+  width:min(1100px,92vw) !important;
+  height:min(43vw,480px) !important;
+  min-height:230px !important;
+  margin-top:clamp(24px,3vw,42px) !important;
+  display:grid !important;
+  place-items:center !important;
+  overflow:visible !important;
+  opacity:0;
+  transform:translateY(18px) scale(.975);
+  animation:tmhStageIn 1100ms cubic-bezier(.16,1,.3,1) .42s forwards !important;
+}
+
+.human-connection {
+  position:relative;
+  z-index:2;
+  width:100%;
+  height:100%;
+  overflow:visible;
+  display:block;
+}
+
+.connection-glow {
+  position:absolute;
+  left:50%; top:59%;
+  width:min(580px,62vw);
+  aspect-ratio:1;
+  transform:translate(-50%,-50%);
+  border-radius:50%;
+  background:radial-gradient(circle, rgba(255,255,255,.065), rgba(255,255,255,.018) 32%, transparent 68%);
+  filter:blur(18px);
+  z-index:0;
+  animation:tmhGlowBreath 4s ease-in-out .7s infinite alternate;
+}
+
+.connection-pulse {
+  position:absolute;
+  left:50%; top:65%;
+  width:26px; height:26px;
+  border-radius:50%;
+  border:1px solid rgba(255,255,255,.18);
+  transform:translate(-50%,-50%) scale(.2);
+  opacity:0;
+  z-index:1;
+  animation:tmhConnectionPulse 1.1s cubic-bezier(.16,1,.3,1) 2.7s forwards;
+}
+
+.human-arm { transform-box:fill-box; transform-origin:center; }
+.human-arm-left { animation:tmhReachLeft 1500ms cubic-bezier(.16,1,.3,1) .65s forwards; transform:translateX(-150px); }
+.human-arm-right { animation:tmhReachRight 1500ms cubic-bezier(.16,1,.3,1) .65s forwards; transform:translateX(150px); }
+
+.loader-tagline {
+  margin-top:0;
+  color:rgba(255,255,255,.38);
+  font-size:10px;
+  font-weight:600;
+  letter-spacing:.34em;
+  opacity:0;
+  transform:translateY(7px);
+  animation:tmhTagIn 900ms cubic-bezier(.16,1,.3,1) 2.65s forwards !important;
+}
+
+.loader-line {
+  position:absolute;
+  left:50%; bottom:6.5%;
+  width:110px; height:1px;
+  transform:translateX(-50%) scaleX(.12);
+  transform-origin:center;
+  background:rgba(255,255,255,.22);
+  opacity:0;
+  animation:tmhLineIn 900ms cubic-bezier(.16,1,.3,1) 2.9s forwards;
+}
+
+@keyframes tmhHaloIn { from{opacity:0;transform:translate(-50%,-50%) scale(.88)} to{opacity:1;transform:translate(-50%,-50%) scale(1)} }
+@keyframes tmhLockupIn { from{opacity:0;transform:translateY(12px) scale(.96)} to{opacity:1;transform:none} }
+@keyframes tmhStageIn { from{opacity:0;transform:translateY(20px) scale(.965);filter:blur(8px)} to{opacity:1;transform:none;filter:none} }
+@keyframes tmhReachLeft { 0%{transform:translateX(-150px)} 65%{transform:translateX(12px)} 80%{transform:translateX(-4px)} 100%{transform:translateX(0)} }
+@keyframes tmhReachRight { 0%{transform:translateX(150px)} 65%{transform:translateX(-12px)} 80%{transform:translateX(4px)} 100%{transform:translateX(0)} }
+@keyframes tmhGlowBreath { from{opacity:.7;transform:translate(-50%,-50%) scale(.96)} to{opacity:1;transform:translate(-50%,-50%) scale(1.04)} }
+@keyframes tmhConnectionPulse { 0%{opacity:0;transform:translate(-50%,-50%) scale(.2)} 25%{opacity:.5} 100%{opacity:0;transform:translate(-50%,-50%) scale(9)} }
+@keyframes tmhTagIn { from{opacity:0;transform:translateY(7px)} to{opacity:1;transform:none} }
+@keyframes tmhLineIn { from{opacity:0;transform:translateX(-50%) scaleX(.12)} to{opacity:1;transform:translateX(-50%) scaleX(1)} }
+
+body.loaded .site-loader {
+  opacity:0 !important;
+  visibility:hidden !important;
+  pointer-events:none !important;
+}
+
+@media (max-width:700px) {
+  .site-loader { padding:0 !important; }
+  .loader-content { width:100vw !important; padding:18px 14px !important; }
+  .loader-logo-wrap { width:58px !important; height:58px !important; margin-bottom:14px !important; border-radius:15px !important; padding:7px !important; }
+  .loader-title { font-size:17px !important; letter-spacing:.105em !important; }
+  .loader-subtitle { font-size:8px !important; letter-spacing:.22em !important; gap:10px !important; }
+  .loader-subtitle span { width:28px !important; }
+  .human-connection-stage {
+    width:100vw !important;
+    height:58vw !important;
+    min-height:220px !important;
+    max-height:340px !important;
+    margin-top:20px !important;
+  }
+  .human-arm-left { animation-name:tmhReachLeftMobile; }
+  .human-arm-right { animation-name:tmhReachRightMobile; }
+  .loader-tagline { font-size:8px; letter-spacing:.25em; margin-top:2px; }
+  .connection-glow { width:78vw; top:61%; }
+  .loader-line { bottom:5.5%; width:76px; }
+}
+
+@keyframes tmhReachLeftMobile { 0%{transform:translateX(-115px)} 65%{transform:translateX(9px)} 80%{transform:translateX(-3px)} 100%{transform:translateX(0)} }
+@keyframes tmhReachRightMobile { 0%{transform:translateX(115px)} 65%{transform:translateX(-9px)} 80%{transform:translateX(3px)} 100%{transform:translateX(0)} }
+
+@media (prefers-reduced-motion: reduce) {
+  .loader-halo,.loader-logo-wrap,.loader-title,.loader-subtitle,.human-connection-stage,.human-arm-left,.human-arm-right,.loader-tagline,.loader-line,.connection-pulse { animation:none !important; opacity:1 !important; transform:none !important; }
+}
