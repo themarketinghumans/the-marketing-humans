@@ -1,17 +1,10 @@
-THE MARKETING HUMANS — WEBSITE UPLOAD
+TMH v9-4 — Motion Color / Seamless Apple-style Integration
 
-Upload/replace the contents of this folder on the website hosting.
+Upload the COMPLETE contents of this folder to GitHub, replacing the previous version.
 
-Latest fix:
-- Header TMH logo now uses adaptive contrast via blend mode.
-- It remains visible on both light/white and dark/black backgrounds.
-- No separate logo switching or JavaScript dependency is required.
-- Existing site content and animation are otherwise unchanged.
+The supplied Untitled.mp4 has been integrated as tmh-motion.mp4 and remains in full colour.
+The motion section appears directly after the “Marketing, made human.” hero section.
+It uses a soft edge fade into the TMH off-white canvas and a restrained scroll entrance.
 
-Main files:
-index.html
-styles.css
-script.js
-TMH-mark-white.png
-TMH LOGO.png
-favicon.png
+Do not rename or move tmh-motion.mp4 or tmh-motion-poster.jpg.
+After deployment, hard refresh Safari with Command + Shift + R.

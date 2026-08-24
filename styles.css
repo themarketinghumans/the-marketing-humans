@@ -2703,71 +2703,116 @@ html, body {
 }
 
 
-/* Motion manifesto — the supplied film is integrated as a native TMH section.
-   The source blue palette is converted to a soft monochrome treatment so it
-   feels native to the site's black / white / graphite visual system. */
+/* =========================================================
+   TMH MOTION MANIFESTO — seamless editorial integration
+   The supplied colour video stays in full colour. It is not
+   converted to grayscale. The surrounding stage uses the same
+   warm-white TMH canvas as the hero, while a soft edge mask makes
+   the film dissolve naturally into the page instead of reading as
+   a pasted rectangle.
+   ========================================================= */
 .motion-manifesto {
-  min-height: 92svh;
+  min-height: 96svh;
   position: relative;
   display: grid;
   place-items: center;
   overflow: hidden;
   isolation: isolate;
   background:
-    radial-gradient(circle at 50% 48%, rgba(255,255,255,.98) 0 18%, rgba(245,245,247,.92) 48%, rgba(232,233,236,.9) 100%);
-  padding: clamp(70px, 9vw, 120px) clamp(18px, 4vw, 64px);
+    radial-gradient(ellipse 54% 58% at 50% 48%, rgba(255,255,255,.98) 0%, rgba(248,248,250,.94) 48%, rgba(245,245,247,.98) 100%);
+  padding: clamp(72px, 9vw, 120px) clamp(18px, 4vw, 64px);
+  scroll-margin-top: 72px;
 }
-.motion-frame {
+
+.motion-stage {
   position: relative;
-  width: min(1180px, 92vw);
+  width: min(1320px, 94vw);
   aspect-ratio: 16 / 9;
-  overflow: hidden;
-  border-radius: clamp(22px, 3vw, 42px);
-  background: #e8e8eb;
-  box-shadow:
-    0 40px 100px rgba(29,29,31,.13),
-    0 0 0 1px rgba(29,29,31,.07);
+  display: grid;
+  place-items: center;
   transform: translateZ(0);
 }
+
+.motion-stage::before {
+  content: "";
+  position: absolute;
+  inset: 8% 5%;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgba(29,29,31,.08), transparent 66%);
+  filter: blur(38px);
+  opacity: .18;
+  transform: translateY(5%);
+  z-index: -1;
+}
+
+.motion-frame {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: transparent;
+  border-radius: clamp(18px, 2.6vw, 36px);
+  box-shadow: 0 34px 90px rgba(29,29,31,.08);
+  transform: translate3d(0, 54px, 0) scale(.90);
+  opacity: 0;
+  will-change: transform, opacity;
+  transition:
+    transform 1.35s cubic-bezier(.16,1,.3,1),
+    opacity .9s cubic-bezier(.22,1,.36,1);
+  /* Fade the outer 10–14% of the film into the TMH page canvas. */
+  -webkit-mask-image: radial-gradient(ellipse at center, #000 57%, rgba(0,0,0,.96) 70%, rgba(0,0,0,.52) 82%, transparent 100%);
+  mask-image: radial-gradient(ellipse at center, #000 57%, rgba(0,0,0,.96) 70%, rgba(0,0,0,.52) 82%, transparent 100%);
+}
+
+.motion-manifesto.is-visible .motion-frame {
+  transform: translate3d(0, 0, 0) scale(1);
+  opacity: 1;
+}
+
 .motion-video {
   display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: grayscale(1) invert(1) contrast(.9) brightness(1.03);
+  object-position: center;
+  filter: none;
+  -webkit-filter: none;
   transform: scale(1.012);
+  backface-visibility: hidden;
 }
+
 .motion-sheen {
   position: absolute;
   inset: 0;
   pointer-events: none;
   background:
-    radial-gradient(circle at 50% 48%, rgba(255,255,255,.06), transparent 44%),
-    linear-gradient(180deg, rgba(255,255,255,.10), transparent 22%, transparent 78%, rgba(29,29,31,.04));
-  mix-blend-mode: screen;
+    linear-gradient(180deg, rgba(255,255,255,.035), transparent 18%, transparent 82%, rgba(255,255,255,.025));
+  mix-blend-mode: normal;
 }
+
 .motion-orb {
   position: absolute;
-  border: 1px solid rgba(29,29,31,.07);
+  border: 1px solid rgba(29,29,31,.065);
   border-radius: 50%;
   pointer-events: none;
   z-index: -1;
 }
 .motion-orb-a {
-  width: min(75vw, 920px);
+  width: min(78vw, 980px);
   aspect-ratio: 1;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
 }
 .motion-orb-b {
-  width: min(105vw, 1320px);
+  width: min(112vw, 1420px);
   aspect-ratio: 1;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  border-color: rgba(29,29,31,.045);
+  border-color: rgba(29,29,31,.035);
 }
+
 .motion-meta {
   position: absolute;
   left: clamp(24px, 4vw, 64px);
@@ -2782,23 +2827,35 @@ html, body {
   letter-spacing: .18em;
   text-transform: uppercase;
 }
+
 @media (max-width: 800px) {
   .motion-manifesto {
-    min-height: 72svh;
-    padding: 58px 16px 86px;
+    min-height: 78svh;
+    padding: 52px 10px 82px;
+  }
+  .motion-stage {
+    width: 108vw;
+    aspect-ratio: 16 / 10;
   }
   .motion-frame {
-    width: 100%;
-    border-radius: 24px;
-    aspect-ratio: 16 / 10;
+    border-radius: 22px;
+    -webkit-mask-image: radial-gradient(ellipse at center, #000 56%, rgba(0,0,0,.94) 72%, rgba(0,0,0,.42) 88%, transparent 100%);
+    mask-image: radial-gradient(ellipse at center, #000 56%, rgba(0,0,0,.94) 72%, rgba(0,0,0,.42) 88%, transparent 100%);
   }
   .motion-video { transform: scale(1.015); }
   .motion-meta {
-    bottom: 22px;
+    left: 20px;
+    right: 20px;
+    bottom: 20px;
     font-size: 8px;
     letter-spacing: .13em;
   }
 }
+
 @media (prefers-reduced-motion: reduce) {
-  .motion-video { animation: none; }
+  .motion-frame {
+    transition: none;
+    transform: none;
+    opacity: 1;
+  }
 }

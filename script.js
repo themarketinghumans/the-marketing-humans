@@ -138,3 +138,33 @@ document.querySelectorAll('.offerings-list .reveal, .work-grid .reveal, .approac
     }, reduce ? 120 : 1550);
   }, { once: true });
 })();
+
+
+// Editorial motion entrance: the film reveals like an Apple-style scroll transition.
+(() => {
+  const section = document.querySelector('.motion-manifesto');
+  const video = section?.querySelector('.motion-video');
+  if (!section || !video) return;
+
+  const reveal = () => {
+    section.classList.add('is-visible');
+    const play = video.play();
+    if (play && typeof play.catch === 'function') play.catch(() => {});
+  };
+
+  if (!('IntersectionObserver' in window)) {
+    reveal();
+    return;
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        reveal();
+        observer.unobserve(section);
+      }
+    });
+  }, { threshold: 0.18, rootMargin: '0px 0px -8% 0px' });
+
+  observer.observe(section);
+})();
