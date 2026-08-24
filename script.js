@@ -112,18 +112,18 @@ document.querySelectorAll('.offerings-list .reveal, .work-grid .reveal, .approac
   el.style.transitionDelay = `${Math.min(i, 4) * 90}ms`;
 });
 
-// TMH cinematic human-connection intro.
+// TMH quick cinematic intro.
 (() => {
   const loader = document.querySelector('#site-loader');
   if (!loader) return;
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // Keep the intro short and deliberate: reveal the site only after the connection resolves.
-  const duration = reduce ? 850 : 4300;
+  // Short, intentional opener: reveal the actual website quickly.
+  const duration = reduce ? 650 : 2300;
   const finish = () => {
     document.body.classList.remove('is-loading');
     document.body.classList.add('loaded');
-    window.setTimeout(() => loader.remove(), reduce ? 0 : 900);
+    window.setTimeout(() => loader.remove(), reduce ? 0 : 700);
   };
 
   window.setTimeout(finish, duration);
