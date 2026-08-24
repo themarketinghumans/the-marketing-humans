@@ -125,5 +125,5 @@ document.querySelectorAll('.offerings-list .reveal, .work-grid .reveal, .approac
     window.setTimeout(() => loader.remove(), reduce ? 0 : 820);
   };
   // Let the SVG handshake complete, then use a soft Apple-like fade into the site.
-  window.setTimeout(finish, reduce ? 250 : 1250);
+  window.setTimeout(finish, reduce ? 350 : 2600);
 })();
