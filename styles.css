@@ -2509,3 +2509,69 @@ body.loaded .site-loader {
 @media (prefers-reduced-motion: reduce) {
   .site-header .brand img { transition: none !important; }
 }
+
+/* =========================================================
+   TMH TYPOGRAPHY SAFETY FIX — prevent oversized letters
+   from touching/clipping between lines at large viewports.
+   ========================================================= */
+.statement,
+.big-type {
+  overflow-x: clip !important;
+  overflow-y: visible !important;
+}
+
+.statement-title,
+.section-heading h2,
+.approach h2,
+.contact h2 {
+  line-height: .98 !important;
+  overflow: visible !important;
+}
+
+.big-type {
+  padding-top: 17vh !important;
+  padding-bottom: 17vh !important;
+}
+
+.big-type-line {
+  font-size: clamp(58px, 10.8vw, 180px) !important;
+  line-height: .92 !important;
+  letter-spacing: -.072em !important;
+  white-space: nowrap !important;
+  overflow: visible !important;
+  padding-bottom: .04em !important;
+}
+
+@media (max-width: 1200px) {
+  .big-type-line {
+    font-size: clamp(54px, 10.7vw, 132px) !important;
+    line-height: .94 !important;
+  }
+}
+
+@media (max-width: 800px) {
+  .statement-title,
+  .section-heading h2,
+  .approach h2,
+  .contact h2 {
+    line-height: .98 !important;
+  }
+
+  .big-type {
+    padding: 14vh 5vw !important;
+  }
+
+  .big-type-line {
+    font-size: clamp(52px, 15.5vw, 92px) !important;
+    line-height: .96 !important;
+    letter-spacing: -.065em !important;
+    white-space: normal !important;
+    overflow: visible !important;
+    text-wrap: balance;
+  }
+
+  .big-type-line.right {
+    text-align: left;
+    transform: none !important;
+  }
+}
